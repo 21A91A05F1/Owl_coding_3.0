@@ -1,0 +1,109 @@
+Toposort in Bfs(khan's algorithm)
+  (u,v) ---> u appears before v in the linear ordering.
+  Linear ordering of edges
+  It is only valid for directed acyclic graph.
+Indegree: Number of incoming edges for a vertex.
+If there is no indegree for any vertex , then it means that the 
+particular edge is independent of nayother edge , so we can place them
+at the beginning.
+Step 1: Insert all the nodes with indegree 0.
+Step 2: Take them out of the queue and reduce the indegree of
+        adjacent nodes.
+
+Code:
+// calculated the indegree.
+ int indegree[v]={0};
+	    for(int i=0;i<v;i++)
+	    {
+	        for(auto it:adj[i])
+	        {
+	            indegree[it]++;
+	        }
+	    }
+// if the indegree is zero , then push the node to queue.
+	    queue<int>q;
+	    for(int i=0;i<v;i++)
+	    {
+	        if(indegree[i]==0)
+	        {
+	            q.push(i);
+	        }
+	    }
+	    vector<int>ve;
+//as above mentioned , traverse throught the queue and reduce the indegree and if anywhere the indegree gets zero , then we can add it our
+resultant vector.
+	    while(!q.empty())
+	    {
+	        int node=q.front();
+	        q.pop();
+	        
+	        ve.push_back(node);
+	        //node is in toposort , so remove it from indegree 
+	        // since we are reducing the indegree of adjacent elements to the elements in queue.
+	        for(auto it:adj[node])
+	        {
+	            indegree[it]--;
+	            if(indegree[it]==0) q.push(it);
+	        }
+	    }
+	    return ve;
+==========================================================================================================================================
+Toposort in dfs:
+Linear ordering of vertices such that if there is an edge
+between u and v , u appears before v in the ordering.
+
+We will be using a stack and visied array.
+this is similar to cycle detection that u have done using
+parent node and current node , in this we will be considering a 
+stack inorder to store the order of the toposort.
+
+Code:
+void dfs(int Node,vector<int>&vis,stack<int>&st,vector<int> adj[] )
+	{
+	    
+        vis[0]=1;
+        for(auto it:adj[Node])
+        {
+            if(vis[it]==0)
+            {
+                vis[it]=1;
+                dfs(it,vis,st,adj);
+                
+            }
+        }
+        st.push(Node);
+	}
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    //
+	    vector<int>vis(V,0);
+	    stack<int>st;
+	    vector<int>res;
+	    for(int i=0;i<V;i++)
+	    {
+	        if(!vis[i])
+	        {
+	            dfs(0,vis,st,adj);
+	        }
+	    }
+	    while(!st.empty())
+	    {
+	        res.push_back(st.top());
+	        st.pop();
+	    }
+	    return res;
+================================================================
+Course scheduling 1.
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. 
+You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that
+you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+
+
+
+
+
+
+
