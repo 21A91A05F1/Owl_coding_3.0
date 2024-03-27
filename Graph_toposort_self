@@ -101,6 +101,114 @@ you must take course bi first if you want to take course ai.
 For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
 Return true if you can finish all courses. Otherwise, return false.
 
+Approach:
+If there is a cyclic dependency then we return false , it indicates that for given prerequisites
+list , if there forms a cycle then it indicates they are dependent tasks then we return false.
+and viceversa happens !!!
+
+We should express the given graphs as directed graphs.
+
+Step1: Firstly find the adjacentlist for given list of prerequisites
+Step2: Then follow the same process , that you have followed in toposort.
+Step3: If the size of the toposort order formed is equal to the number of tasks present , then 
+       We can return true , else it would be false.
+
+Code:
+vector<int>adj[v];
+	    for(auto it:prerequisites)
+	    {
+	        adj[it.first].push_back(it.second);
+	    }
+	    
+	     int indegree[v]={0};
+	    for(int i=0;i<v;i++)
+	    {
+	        for(auto it:adj[i])
+	        {
+	            indegree[it]++;
+	        }
+	    }
+	    queue<int>q;
+	    for(int i=0;i<v;i++)
+	    {
+	        if(indegree[i]==0)
+	        {
+	            q.push(i);
+	        }
+	    }
+	    vector<int>ve;
+
+	    while(!q.empty())
+	    {
+	        int node=q.front();
+	        q.pop();
+	        
+	        ve.push_back(node);
+	        for(auto it:adj[node])
+	        {
+	            indegree[it]--;
+	            if(indegree[it]==0) q.push(it);
+	        }
+	    }
+	    if(ve.size()==v) return true;
+	    return false;
+=======================================================================================
+Course Schedule 2:
+we should return the toposort order.
+
+There are a total of n tasks you have to pick, labelled from 0 to n-1.
+Some tasks may have prerequisite tasks, for example to pick task 0 you have to first finish tasks 1
+, which is expressed as a pair: [0, 1]
+Given the total number of n tasks and a list of prerequisite pairs of size m.
+Find a ordering of tasks you should pick to finish all tasks.
+Note: There may be multiple correct orders, you just need to return any one of them. 
+If it is impossible to finish all tasks, return an empty array. 
+Driver code will print "No Ordering Possible", on returning an empty array.
+Returning any correct order will give the output as 1, 
+whereas any invalid order will give the output 0.
+
+Code:
+vector<int>adj[v];
+	    for(auto it:prerequisites)
+	    {
+	        adj[it[1]].push_back(it[0]);
+	    }
+	    
+	     int indegree[v]={0};
+	    for(int i=0;i<v;i++)
+	    {
+	        for(auto it:adj[i])
+	        {
+	            indegree[it]++;
+	        }
+	    }
+	    queue<int>q;
+	    for(int i=0;i<v;i++)
+	    {
+	        if(indegree[i]==0)
+	        {
+	            q.push(i);
+	        }
+	    }
+	    vector<int>ve;
+
+	    while(!q.empty())
+	    {
+	        int node=q.front();
+	        q.pop();
+	        
+	        ve.push_back(node);
+	        for(auto it:adj[node])
+	        {
+	            indegree[it]--;
+	            if(indegree[it]==0) q.push(it);
+	        }
+	    }
+	    if(ve.size()==v) return ve;
+	    return {};
+
+
+
 
 
 
