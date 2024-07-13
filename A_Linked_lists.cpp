@@ -249,5 +249,20 @@ Node* reverseDLL(Node* head) {
    
    
 ======================================================================================================
+  Find middle element in a Linked List(Hare and tortoise)
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow=head;
+        ListNode* fast=head;
+        while(fast && fast->next)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return slow;
+    }
+};
+===============================================================================================
   
 
