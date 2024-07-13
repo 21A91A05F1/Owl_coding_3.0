@@ -186,5 +186,42 @@ void deleteFromEnd(Node*& head) {
     }
     delete temp;
 }
-
+====================================================Reversing linked list==========================================
+  SLL
+  Node* reverseLinkedList(Node *head)
+{
+    // Write your code here
+    Node* curr=head;
+    Node* temp=curr->next;
+    Node* prev=NULL;
+    if(head==NULL or head->next==NULL) return NULL;
+    while(curr)
+    {
+        temp=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=temp;
+    }
+    return prev;
+}
+DLL
+//swap the links between the nodes.
+Node* reverseDLL(Node* head)
+{   
+    if(head==NULL) return NULL;
+    if(head->next==NULL) return head;
+   Node* temp=NULL;
+   Node* curr=head;
+   while(curr!=NULL)
+   {
+       temp=curr->prev;
+       curr->prev=curr->next;
+       curr->next=temp;
+       curr=curr->prev;
+   }
+   
+   return temp->prev;
+}
+======================================================================================================
+  
 
