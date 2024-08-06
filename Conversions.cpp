@@ -41,3 +41,41 @@ Process: Repeatedly divide the decimal number by 2 and prepend the remainder (0 
 
 =================================================3. Binary to Octal===============================================================
   
+Step1:Binary to decimal
+Step2:Decimal to octal
+
+int binaryToDecimal(string binary) {
+    int decimal = 0;
+    int power = 0;
+    for (int i = binary.length() - 1; i >= 0; i--) {
+        if (binary[i] == '1') {
+            decimal += pow(2, power);
+        }
+        power++;
+    }
+    return decimal;
+}
+
+string decimalToOctal(int decimal) {
+    string octal = "";
+    while (decimal > 0) {
+        octal = to_string(decimal % 8) + octal;
+        decimal /= 8;
+    }
+    return decimal;
+}
+============================================================4.Octal to binary=========================================================
+Convert each octal digit to its binary equivalent using direct mapping.
+Concatenate the binary equivalents to form the final binary string.
+
+  string octalToBinary(const string& octal) {
+    string binary = "";
+    const string binaryTable[] = {"000", "001", "010", "011", "100", "101", "110", "111"};
+    
+    for (char digit : octal) {
+        // Append the corresponding binary string for each octal digit
+        binary += binaryTable[digit - '0'];
+    }
+    return binary;
+}
+====================================================5.Binary to Hexadecimal===============================================
